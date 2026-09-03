@@ -1,5 +1,5 @@
--- File: NarsEditorcode_UPDATED.lua
--- NarsEvr Code Editor v2 (UPDATED)
+-- EDITOR CODE 
+-- Nars Endeavor 
 
 local Services = {
 	Players = game:GetService("Players"),
@@ -28,7 +28,7 @@ local ASSETS = {
 	Open = "rbxassetid://100744567525223",
 	NewFile = "rbxassetid://76544604043974",
 	NewFolder = "rbxassetid://91865663406119",
-	Refresh = "rbxassetid://110116685948665",
+	Refresh = "rbxassetid://84183336178654",
 	Search = "rbxassetid://91918048389224",
 	TabClose = "rbxassetid://6031094678",
 	TabAdd = "rbxassetid://113157136350384",
