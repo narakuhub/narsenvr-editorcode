@@ -1,6 +1,4 @@
--- File: NarsEditorcode_UPDATED.lua
--- NarsEvr Code Editor v2 (UPDATED)
-
+-- Code editor by nars endeavor
 local Services = {
 	Players = game:GetService("Players"),
 	UserInputService = game:GetService("UserInputService"),
