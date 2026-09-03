@@ -1,5 +1,3 @@
--- NarsEvr Code Editor v2 - Standalone Loading Screen (Flat Startup Card)
-
 local Services = {
 	Players = game:GetService("Players"),
 	TweenService = game:GetService("TweenService"),
@@ -13,53 +11,37 @@ local TargetParent = (function()
 	return LocalPlayer:WaitForChild("PlayerGui")
 end)()
 
--- Clean up any existing loading screen instance
 local oldLoading = TargetParent:FindFirstChild("NARS_LoadingScreen")
 if oldLoading then oldLoading:Destroy() end
 
--- ScreenGui Setup
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "NARS_LoadingScreen"
 ScreenGui.ResetOnSpawn = false
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 ScreenGui.Parent = TargetParent
 
--- Outer Container (Digunakan sebagai Mask untuk animasi hapus dari Kiri ke Kanan)
-local MaskFrame = Instance.new("Frame")
-MaskFrame.Name = "MaskFrame"
-MaskFrame.AnchorPoint = Vector2.new(0, 0.5)
-MaskFrame.Position = UDim2.fromScale(0.5, 0.5) -- Akan disesuaikan saat initialization
-MaskFrame.Size = UDim2.fromScale(0.45, 0.30)
-MaskFrame.BackgroundTransparency = 1
-MaskFrame.BorderSizePixel = 0
-MaskFrame.ClipsDescendants = true
-MaskFrame.Parent = ScreenGui
+local Card = Instance.new("Frame")
+Card.Name = "StartupCard"
+Card.AnchorPoint = Vector2.new(0.5, 0.5)
+Card.Position = UDim2.new(0.5, 0, 0.5, 0)
+Card.Size = UDim2.fromScale(0.45, 0.30)
+Card.BackgroundColor3 = Color3.fromRGB(24, 25, 28)
+Card.BackgroundTransparency = 1
+Card.BorderSizePixel = 0
+Card.ClipsDescendants = true
+Card.Parent = ScreenGui
 
--- Bound Constraint (Menjaga ukuran agar tetap compact di semua resolusi)
 local CardConstraint = Instance.new("UISizeConstraint")
 CardConstraint.MinSize = Vector2.new(360, 190)
 CardConstraint.MaxSize = Vector2.new(410, 215)
-CardConstraint.Parent = MaskFrame
+CardConstraint.Parent = Card
 
--- Inner Card Container (Isi visual card yang tetap diam di tempat)
-local Card = Instance.new("Frame")
-Card.Name = "StartupCard"
-Card.AnchorPoint = Vector2.new(0, 0)
-Card.Position = UDim2.new(0, 0, 0, 0)
-Card.Size = UDim2.fromScale(1, 1)
-Card.BackgroundColor3 = Color3.fromRGB(24, 25, 28)
-Card.BackgroundTransparency = 1 -- Awal transparan untuk fade-in
-Card.BorderSizePixel = 0
-Card.Parent = MaskFrame
-
--- Flat Border Outer
 local CardStroke = Instance.new("UIStroke")
 CardStroke.Color = Color3.fromRGB(45, 47, 52)
 CardStroke.Thickness = 1
 CardStroke.Transparency = 1
 CardStroke.Parent = Card
 
--- Top Header Panel (Gaya Title Bar Editor)
 local HeaderPanel = Instance.new("Frame")
 HeaderPanel.Name = "HeaderPanel"
 HeaderPanel.Size = UDim2.new(1, 0, 0, 28)
@@ -81,7 +63,6 @@ HeaderTitle.TextSize = 10
 HeaderTitle.TextXAlignment = Enum.TextXAlignment.Left
 HeaderTitle.Parent = HeaderPanel
 
--- Flat Divider Line (Pemisah Header & Body)
 local HeaderDivider = Instance.new("Frame")
 HeaderDivider.Name = "HeaderDivider"
 HeaderDivider.Size = UDim2.new(1, 0, 0, 1)
@@ -91,7 +72,6 @@ HeaderDivider.BackgroundTransparency = 1
 HeaderDivider.BorderSizePixel = 0
 HeaderDivider.Parent = Card
 
--- Content Area Body
 local ContentFrame = Instance.new("Frame")
 ContentFrame.Name = "ContentFrame"
 ContentFrame.Size = UDim2.new(1, 0, 1, -29)
@@ -99,7 +79,6 @@ ContentFrame.Position = UDim2.new(0, 0, 0, 29)
 ContentFrame.BackgroundTransparency = 1
 ContentFrame.Parent = Card
 
--- Title Label
 local TitleLabel = Instance.new("TextLabel")
 TitleLabel.Name = "Title"
 TitleLabel.Size = UDim2.new(1, -32, 0, 26)
@@ -113,7 +92,6 @@ TitleLabel.TextSize = 24
 TitleLabel.TextXAlignment = Enum.TextXAlignment.Center
 TitleLabel.Parent = ContentFrame
 
--- Subtitle Label
 local SubtitleLabel = Instance.new("TextLabel")
 SubtitleLabel.Name = "Subtitle"
 SubtitleLabel.Size = UDim2.new(1, -32, 0, 14)
@@ -127,7 +105,6 @@ SubtitleLabel.TextSize = 11
 SubtitleLabel.TextXAlignment = Enum.TextXAlignment.Center
 SubtitleLabel.Parent = ContentFrame
 
--- Status Label
 local StatusLabel = Instance.new("TextLabel")
 StatusLabel.Name = "Status"
 StatusLabel.Size = UDim2.new(1, -32, 0, 14)
@@ -141,7 +118,6 @@ StatusLabel.TextSize = 11
 StatusLabel.TextXAlignment = Enum.TextXAlignment.Center
 StatusLabel.Parent = ContentFrame
 
--- Progress Bar Elements
 local ProgressTrack = Instance.new("Frame")
 ProgressTrack.Name = "ProgressTrack"
 ProgressTrack.Size = UDim2.new(1, -100, 0, 3)
@@ -154,12 +130,11 @@ ProgressTrack.Parent = ContentFrame
 local ProgressBar = Instance.new("Frame")
 ProgressBar.Name = "ProgressBar"
 ProgressBar.Size = UDim2.new(0, 0, 1, 0)
-ProgressBar.BackgroundColor3 = Color3.fromRGB(200, 203, 208)
+ProgressBar.BackgroundColor3 = Color3.fromRGB(0, 122, 204)
 ProgressBar.BackgroundTransparency = 1
 ProgressBar.BorderSizePixel = 0
 ProgressBar.Parent = ProgressTrack
 
--- Footer Section Divider & Panel
 local FooterDivider = Instance.new("Frame")
 FooterDivider.Name = "FooterDivider"
 FooterDivider.Size = UDim2.new(1, 0, 0, 1)
@@ -195,7 +170,16 @@ VersionLabel.TextSize = 9
 VersionLabel.TextXAlignment = Enum.TextXAlignment.Right
 VersionLabel.Parent = ContentFrame
 
--- Helper Tween Function
+local CropOverlay = Instance.new("Frame")
+CropOverlay.Name = "CropOverlay"
+CropOverlay.Size = UDim2.new(0, 0, 1, 0)
+CropOverlay.Position = UDim2.new(0, 0, 0, 0)
+CropOverlay.BackgroundColor3 = Color3.fromRGB(24, 25, 28)
+CropOverlay.BackgroundTransparency = 1
+CropOverlay.BorderSizePixel = 0
+CropOverlay.ZIndex = 10
+CropOverlay.Parent = Card
+
 local function tween(inst, duration, props, style, dir)
 	local info = TweenInfo.new(duration, style or Enum.EasingStyle.Quad, dir or Enum.EasingDirection.Out)
 	local t = Services.TweenService:Create(inst, info, props)
@@ -203,27 +187,13 @@ local function tween(inst, duration, props, style, dir)
 	return t
 end
 
--- Synchronize Outer & Inner Frame for Masking Animation
-local function updateLayout()
-	local targetWidth = MaskFrame.AbsoluteSize.X
-	local targetHeight = MaskFrame.AbsoluteSize.Y
-	MaskFrame.Position = UDim2.new(0.5, -targetWidth / 2, 0.5, 0)
-	Card.Size = UDim2.new(0, targetWidth, 0, targetHeight)
-end
-
-MaskFrame:GetPropertyChangedSignal("AbsoluteSize"):Connect(updateLayout)
-task.defer(updateLayout)
-
--- Execution Sequence
 task.spawn(function()
-	-- 1. Pure Fade-In Entrance (Posisi Card Tetap di Center)
 	tween(Card, 0.5, { BackgroundTransparency = 0 })
 	tween(HeaderPanel, 0.5, { BackgroundTransparency = 0 })
 	tween(CardStroke, 0.5, { Transparency = 0 })
 	tween(HeaderDivider, 0.5, { BackgroundTransparency = 0 })
 	tween(FooterDivider, 0.5, { BackgroundTransparency = 0 })
 	
-	-- Element Text & Progress Fade-In
 	tween(HeaderTitle, 0.45, { TextTransparency = 0 })
 	tween(TitleLabel, 0.45, { TextTransparency = 0 })
 	tween(SubtitleLabel, 0.45, { TextTransparency = 0 })
@@ -235,13 +205,12 @@ task.spawn(function()
 
 	task.wait(0.6)
 
-	-- 2. Stage Loading Process (Durasi Lebih Lama & Realistis)
 	local stages = {
 		{ progress = 0.15, status = "Initializing Editor Environment...", delay = 0.65 },
 		{ progress = 0.35, status = "Loading API Database...", delay = 0.85 },
 		{ progress = 0.60, status = "Loading Core Components...", delay = 0.95 },
 		{ progress = 0.82, status = "Loading Explorer & Syntax Rules...", delay = 0.80 },
-		{ progress = 0.95, status = "Finalizing Workspace...", delay = 0.60 },
+		{ progress = 0.95, status = "Finalizing System...", delay = 0.60 },
 		{ progress = 1.00, status = "Ready!", delay = 0.50 }
 	}
 
@@ -250,25 +219,31 @@ task.spawn(function()
 		tween(ProgressBar, stage.delay, { Size = UDim2.new(stage.progress, 0, 1, 0) }, Enum.EasingStyle.Sine)
 		task.wait(stage.delay + 0.15)
 	end
-
-	-- Hold sebentar di status "Ready!"
+		
 	task.wait(0.5)
 
-	-- 3. Linear Wipe Exit Animation (Terhapus Perlahan dari Kiri ke Kanan via Masking)
-	local cardWidth = MaskFrame.AbsoluteSize.X
-	
-	-- MaskFrame bergeser ke kanan sembari mengecil lebarnya
-	local wipeTween = tween(MaskFrame, 0.6, { 
-		Size = UDim2.new(0, 0, MaskFrame.Size.Y.Scale, MaskFrame.Size.Y.Offset),
-		Position = UDim2.new(0.5, cardWidth / 2, 0.5, 0)
+	CropOverlay.BackgroundTransparency = 0
+	HeaderTitle.TextTransparency = 1
+	TitleLabel.TextTransparency = 1
+	SubtitleLabel.TextTransparency = 1
+	StatusLabel.TextTransparency = 1
+	ProgressTrack.BackgroundTransparency = 1
+	ProgressBar.BackgroundTransparency = 1
+	BrandingLabel.TextTransparency = 1
+	VersionLabel.TextTransparency = 1
+	HeaderPanel.BackgroundTransparency = 1
+	HeaderDivider.BackgroundTransparency = 1
+	FooterDivider.BackgroundTransparency = 1
+	CardStroke.Transparency = 1
+
+	local wipeTween = tween(CropOverlay, 0.55, { 
+		Size = UDim2.new(1, 0, 1, 0)
 	}, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut)
 
 	wipeTween.Completed:Wait()
 
-	-- 4. Destroy Loading Screen UI Completely
 	ScreenGui:Destroy()
 
-	-- 5. Fetch & Execute Main.lua Script
 	local mainUrl = "https://raw.githubusercontent.com/narakuhub/narsenvr-editorcode/refs/heads/main/main.lua"
 	local fetchSuccess, sourceCode = pcall(function()
 		return game:HttpGet(mainUrl)
@@ -281,10 +256,6 @@ task.spawn(function()
 
 		if loadSuccess and mainFunction then
 			pcall(mainFunction)
-		else
-			warn("[NarsEvr Loading Error]: Failed to parse main.lua")
 		end
-	else
-		warn("[NarsEvr Loading Error]: Failed to fetch main.lua from remote source")
 	end
 end)
