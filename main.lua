@@ -20,7 +20,7 @@ local oldGui = TargetParent:FindFirstChild("NARS_LuaEditor")
 if oldGui then oldGui:Destroy() end
 
 local ASSETS = {
-	Logo = "rbxassetid://100744567525223",
+	Logo = "rbxassetid://122926744824622",
 	Menu = "rbxassetid://139359175473641",
 	Close = "rbxassetid://6031094678",
 	Minimize = "rbxassetid://122268389930903",
@@ -422,7 +422,7 @@ local ExecBtn = createToolIconButton("ExecBtn", ASSETS.Execute, "Execute", 1)
 local ClearBtn = createToolIconButton("ClearBtn", ASSETS.Clear, "Clear", 2)
 local CopyBtn = createToolIconButton("CopyBtn", ASSETS.Copy, "Copy", 3)
 local SaveBtn = createToolIconButton("SaveBtn", ASSETS.Save, "Save", 4)
-local DeleteFileBtn = createToolIconButton("DeleteFileBtn", ASSETS.Delete, "Delete", 5)
+local DeleteFileBtn = createToolIconButton("DeleteFileBtn", ASSETS.Delete, "Delete File", 5)
 
 local BreadcrumbBar = Instance.new("Frame")
 BreadcrumbBar.Name = "BreadcrumbBar"
